@@ -86,7 +86,7 @@ function buildlist(){
                     y: [parseInt(fat), parseInt(protein), parseInt(carbs)],
                     type: 'bar',
                     marker:{
-                      color: ['white', 'pink', 'yellow']
+                      color: ['grey', 'pink', 'yellow']
                     }
                   }
                 ];

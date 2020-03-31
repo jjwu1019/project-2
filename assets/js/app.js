@@ -1,5 +1,9 @@
 d3.json("./assets/Data/food.json").then(function(x) {
   // console.log(x)
+  var info_box = d3.select("#recipe");
+      info_box.html("");
+      info_box.append("h2").html('food');
+
   var data = x
   console.log(data)
 
@@ -77,7 +81,34 @@ d3.json("./assets/Data/food.json").then(function(x) {
         .attr("pointer-events", "all")
         .on("click", clicked);
 
+    function buildrecipe(val) {
+      // console.log(val)
+      d3.csv("./assets/Data/instructions.csv").then(function(x) {
+
+        // console.log(x)
+
+        function filter_dish(x) {
+          return x.title === val;
+        }
+
+        var selected_dish = x.filter(filter_dish);
+        var instructions = selected_dish.map(y => y.instructions)
+
+        var info_box = d3.select("#recipe");
+            info_box.html("");
+            info_box.append("h2").html(val);
+            info_box.append("p").html(instructions);
+
+          
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
+
     function clicked(p) {
+
+      buildrecipe(p.data.name)
+
       parent.datum(p.parent || root);
 
       root.each(d => d.target = {
@@ -125,8 +156,9 @@ d3.json("./assets/Data/food.json").then(function(x) {
     }
 
     return svg.node();
-  
 
+    
+  
 
 
 }).catch(function(error) {
