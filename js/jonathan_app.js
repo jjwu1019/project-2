@@ -42,7 +42,7 @@ d3.json("./Data/food.json").then(function(x) {
     const svg = d3.select("#sunburst")
       .append("svg")
       .attr("viewBox", [0, 0, width, width])
-      .style("font", "8px sans-serif");
+      .style("font", "12px sans-serif");
 
     const g = svg.append("g")
       .attr("transform", `translate(${width / 2},${width / 2})`);
@@ -83,7 +83,7 @@ d3.json("./Data/food.json").then(function(x) {
 
     function buildrecipe(val) {
       // console.log(val)
-      d3.csv("./Data/instructions.csv").then(function(x) {
+      d3.csv("./Data/merged.csv").then(function(x) {
 
         // console.log(x)
 
@@ -93,17 +93,40 @@ d3.json("./Data/food.json").then(function(x) {
 
         var selected_dish = x.filter(filter_dish);
         var instructions = selected_dish.map(y => y.instructions)
+        var image = selected_dish.map(y => y.image)
+        var sourceUrl = selected_dish.map(y => y.sourceUrl)
+        var readyInMinutes = selected_dish.map(y => y.readyInMinutes)
+        var servings = selected_dish.map(y => y.servings)
+
+        var img_box = d3.select("#image");
+            img_box.html("");
+            img_box.attr("src", `${image}`);
 
         var info_box = d3.select("#recipe");
             info_box.html("");
             info_box.append("h2").attr("class", "text-uppercase").html(val);
             info_box.append("p").html(instructions);
+            if (sourceUrl == ""){
+            info_box.append("a").html("");
+            } else {
+              info_box.append("a").attr("href", `${sourceUrl}`).html("Click me for source site");
+            }
+        
+        var misc_box = d3.select("#misc");
+            misc_box.html("");
+            if (readyInMinutes == ""){
+            misc_box.html("");
+            } else {
+            misc_box.append("p").text(`Ready in ${readyInMinutes} minutes || Serving size: ${servings}`);
+            }
 
           
       }).catch(function(error) {
         console.log(error);
       });
     }
+
+    
 
     function clicked(p) {
 

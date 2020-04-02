@@ -32,7 +32,7 @@ function buildTable(b){
 
 
         d3.csv("./Data/merged.csv").then(function(x) {
-        console.log(x)
+        // console.log(x)
 
         function filter_region(x) {
             return x.region === b;
@@ -44,6 +44,7 @@ function buildTable(b){
         var weightWatcherSmartPoints =  selected_region.map(y => y.weightWatcherSmartPoints)
         var pricePerServing =  selected_region.map(y => y.pricePerServing)
         var healthScore =  selected_region.map(y => y.healthScore)
+        var aggregateLikes =  selected_region.map(y => y.aggregateLikes)
         var calories =  selected_region.map(y => y.calories)
 
 
@@ -57,6 +58,7 @@ function buildTable(b){
             trow.append("td").text(parseInt(weightWatcherSmartPoints[i]));
             trow.append("td").text(parseInt(pricePerServing[i]));
             trow.append("td").text(parseInt(healthScore[i]));
+            trow.append("td").text(parseInt(aggregateLikes[i]));
             trow.append("td").text(parseInt(calories[i]));
             
         }
