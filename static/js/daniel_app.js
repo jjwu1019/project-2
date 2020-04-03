@@ -2,7 +2,7 @@
 
 function buildlist(){
 
-    d3.csv("./Data/merged.csv").then(function(x) {
+    d3.csv("/static/Data/merged.csv").then(function(x) {
      //console.log(x)
     
     var region = x.map(y => y.region)
@@ -31,7 +31,7 @@ function buildTable(b){
     
 
 
-        d3.csv("./Data/merged.csv").then(function(x) {
+        d3.csv("/static/Data/merged.csv").then(function(x) {
         // console.log(x)
 
         function filter_region(x) {
@@ -89,7 +89,7 @@ function buildTable(b){
           type: 'column'
       },
       title: {
-          text: 'Data extracted from a HTML table in the page'
+          text: ''
       },
       yAxis: {
           allowDecimals: false,

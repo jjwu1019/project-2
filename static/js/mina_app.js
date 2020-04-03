@@ -1,6 +1,6 @@
 function buildlist(){
 
-  d3.csv("./Data/mina_chart_data.csv").then(function(x) {
+  d3.csv("/static/Data/mina_chart_data.csv").then(function(x) {
   // console.log(x)
   
   var region = x.map(y => y.region)
@@ -27,7 +27,7 @@ function buildlist(){
   /////////////////////////////////////////////////////////
   function buildlist2(val){
   
-      d3.csv("./Data/mina_chart_data.csv").then(function(x) {
+      d3.csv("/static/Data/mina_chart_data.csv").then(function(x) {
       // console.log(x)
       
       function filter_region(x) {
@@ -66,7 +66,7 @@ function buildlist(){
   
         }
       function buildbar(val){
-          d3.csv("./Data/mina_chart_data.csv").then(function(x) {
+          d3.csv("/static/Data/mina_chart_data.csv").then(function(x) {
          
               function filter_dish(x) {
                   return x.title === val;
@@ -109,7 +109,7 @@ function buildlist(){
         }
         ///////////////////////////
         function buildsummary(val){
-          d3.csv("./Data/mina_chart_data.csv").then(function(x) {
+          d3.csv("/static/Data/mina_chart_data.csv").then(function(x) {
          
               function filter_dish(x) {
                   return x.title === val;

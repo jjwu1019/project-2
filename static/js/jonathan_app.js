@@ -1,8 +1,8 @@
-d3.json("./Data/food.json").then(function(x) {
+d3.json("/static/Data/food.json").then(function(x) {
   // console.log(x)
   var info_box = d3.select("#recipe");
       info_box.html("");
-      info_box.append("h2").attr("class", "text-uppercase").html('food');
+      info_box.append("h3").attr("class", "text-uppercase").html('food');
 
   var data = x
   console.log(data)
@@ -83,7 +83,7 @@ d3.json("./Data/food.json").then(function(x) {
 
     function buildrecipe(val) {
       // console.log(val)
-      d3.csv("./Data/merged.csv").then(function(x) {
+      d3.csv("/static/Data/merged.csv").then(function(x) {
 
         // console.log(x)
 
@@ -104,7 +104,7 @@ d3.json("./Data/food.json").then(function(x) {
 
         var info_box = d3.select("#recipe");
             info_box.html("");
-            info_box.append("h2").attr("class", "text-uppercase").html(val);
+            info_box.append("h3").attr("class", "text-uppercase").html(val);
             info_box.append("p").html(instructions);
             if (sourceUrl == ""){
             info_box.append("a").html("");
