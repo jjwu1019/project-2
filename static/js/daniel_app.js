@@ -1,15 +1,17 @@
-
-
+//Build dropdown list and table with our data.
 function buildlist(){
 
     d3.csv("/static/Data/merged.csv").then(function(x) {
      //console.log(x)
     
+    //Grabing region information from our data, then remove duplicates.
     var region = x.map(y => y.region)
     var uniqueregion = Array.from(new Set(region))
     
+    //d3.select the dropdown in our html
     var dropdownMenu = d3.select("#selDataset3");
-        
+    
+    //Append unique regions into our dropdown menu.
     dropdownMenu.selectAll("option")
         .data(uniqueregion)
         .enter()
@@ -25,21 +27,21 @@ function buildlist(){
       console.log(error);
     });
     }
+    //call buildlist function when initializing the page.
     buildlist()
 
+//Function that build table base on user selection in the dropdown menu.
 function buildTable(b){
     
-
-
         d3.csv("/static/Data/merged.csv").then(function(x) {
-        // console.log(x)
-
+        
+        //filter our data base on the region user selected.
         function filter_region(x) {
             return x.region === b;
           }
-    
         var selected_region = x.filter(filter_region);
-          
+        
+        //Grab information from filtered data.
         var dish = selected_region.map(y => y.title)
         var weightWatcherSmartPoints =  selected_region.map(y => y.weightWatcherSmartPoints)
         var pricePerServing =  selected_region.map(y => y.pricePerServing)
@@ -47,11 +49,12 @@ function buildTable(b){
         var aggregateLikes =  selected_region.map(y => y.aggregateLikes)
         var calories =  selected_region.map(y => y.calories)
 
-
+        //d3.select table body to append information in the future.
         var tbody = d3.select("#datatable").select("tbody");
+        //empty tbody
         tbody.html("");
        
-    
+        //Append filtered information into tbody.
       for (var i = 0; i < selected_region.length; i++) {
             var trow = tbody.append("tr");
             trow.append("th").text(dish[i]);
@@ -62,7 +65,8 @@ function buildTable(b){
             trow.append("td").text(parseInt(calories[i]));
             
         }
-    
+        
+        //Call barchart building function written below.
         buildHighChart()
     }).catch(function(error) {
         console.log(error);
@@ -74,12 +78,16 @@ function buildTable(b){
     
     
     }
+
+    //Build table when initializing the page.
     buildTable("chinese")
 
+    //Run buildtable function when user select a region from dropdown.
    function optionChanged(b){
         buildTable(b)
    };
 
+   //Build a bar chart with Highchart.js using the datatable in html.
    function buildHighChart() {
     Highcharts.chart('container', {
       data: {

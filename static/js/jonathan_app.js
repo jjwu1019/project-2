@@ -1,12 +1,14 @@
+//Grab our data with promise, and graph a d3 sunburst chart.
 d3.json("/static/Data/food.json").then(function(x) {
-  // console.log(x)
+  //This initialize the sunburst chart title
   var info_box = d3.select("#recipe");
       info_box.html("");
       info_box.append("h3").attr("class", "text-uppercase").html('food');
 
   var data = x
-  console.log(data)
+  // console.log(data)
 
+  //this is the format of the sunburst chart
   var format = d3.format(",d")
 
   var width = 932
@@ -25,7 +27,7 @@ d3.json("/static/Data/food.json").then(function(x) {
 
   // var d3 = require("d3@5")
 
-  
+  //This does partition on the json data.
   partition = data => {
     const root = d3.hierarchy(data)
         .sum(d => d.value)
@@ -34,7 +36,8 @@ d3.json("/static/Data/food.json").then(function(x) {
         .size([2 * Math.PI, root.height + 1])
       (root);
   }
-  
+
+    //Graph the data with d3.js
     const root = partition(data);
 
     root.each(d => d.current = d);
@@ -81,27 +84,32 @@ d3.json("/static/Data/food.json").then(function(x) {
         .attr("pointer-events", "all")
         .on("click", clicked);
 
+    //Build recipe information
     function buildrecipe(val) {
       // console.log(val)
       d3.csv("/static/Data/merged.csv").then(function(x) {
-
-        // console.log(x)
-
+        ingredients
+        
+        //Filter our data base on the value that the user clicked
         function filter_dish(x) {
           return x.title === val;
         }
-
         var selected_dish = x.filter(filter_dish);
+
+        //Arrays that stores the columns of information in the filtered data.
         var instructions = selected_dish.map(y => y.instructions)
         var image = selected_dish.map(y => y.image)
         var sourceUrl = selected_dish.map(y => y.sourceUrl)
         var readyInMinutes = selected_dish.map(y => y.readyInMinutes)
         var servings = selected_dish.map(y => y.servings)
+        var ingredients  = selected_dish.map(y => y.ingredients)
 
+        //Append food image.
         var img_box = d3.select("#image");
             img_box.html("");
             img_box.attr("src", `${image}`);
 
+        //Append recipe information.
         var info_box = d3.select("#recipe");
             info_box.html("");
             info_box.append("h3").attr("class", "text-uppercase").html(val);
@@ -112,6 +120,7 @@ d3.json("/static/Data/food.json").then(function(x) {
               info_box.append("a").attr("href", `${sourceUrl}`).html("Click me for source site");
             }
         
+        //Append cooking time and serving size of the dish.
         var misc_box = d3.select("#misc");
             misc_box.html("");
             if (readyInMinutes == ""){
@@ -119,7 +128,15 @@ d3.json("/static/Data/food.json").then(function(x) {
             } else {
             misc_box.append("p").text(`Ready in ${readyInMinutes} minutes || Serving size: ${servings}`);
             }
-
+        
+        //Append ingredients
+        var ingredient_box = d3.select("#ing");
+            ingredient_box.html("");
+            if (ingredients == ""){
+              ingredient_box.html("");
+            } else {
+              ingredient_box.append("p").html(`<b>Ingredients: </b> ${ingredients}`);
+            }
           
       }).catch(function(error) {
         console.log(error);
@@ -127,7 +144,7 @@ d3.json("/static/Data/food.json").then(function(x) {
     }
 
     
-
+    //Function that runs when user click on the sunburst chart.
     function clicked(p) {
 
       buildrecipe(p.data.name)
