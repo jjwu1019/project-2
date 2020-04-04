@@ -1,10 +1,4 @@
 // Create a map object
-var foodData = "/static/Data/food.json";
-d3.json(foodData, function(y) {
-  console.log(y)
-});
-
-
 var myMap = L.map("map", {
   center: [25, 10],
   zoom: 3
@@ -76,6 +70,7 @@ var regions = [{
 }
 ];
 
+console.log(regions)
 // Loop through the cities array and create one marker for each city, bind a popup containing its name and population add it to the map
 for (var i = 0; i < regions.length; i++) {
   var city = regions[i];
