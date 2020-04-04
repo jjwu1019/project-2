@@ -1,12 +1,12 @@
 //Grab our data with promise, and graph a d3 sunburst chart.
 d3.json("/static/Data/food.json").then(function(x) {
+  
   //This initialize the sunburst chart title
   var info_box = d3.select("#recipe");
       info_box.html("");
       info_box.append("h3").attr("class", "text-uppercase").html('food');
 
   var data = x
-  // console.log(data)
 
   //this is the format of the sunburst chart
   var format = d3.format(",d")
@@ -88,7 +88,6 @@ d3.json("/static/Data/food.json").then(function(x) {
     function buildrecipe(val) {
       // console.log(val)
       d3.csv("/static/Data/merged.csv").then(function(x) {
-        ingredients
         
         //Filter our data base on the value that the user clicked
         function filter_dish(x) {

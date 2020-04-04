@@ -92,7 +92,7 @@ function buildlist(){
               var protein = selected_dish.map(y => y.protein)
               var carbs = selected_dish.map(y => y.carbs)
               
-              //Plot.ly bar graphing here.
+              //Plot.ly bar graphing here. Transform the values to integer (parseInt).
               var data = [
                   {
                     x: ['fat (g)', 'protein (g)', 'carbs (g)'],

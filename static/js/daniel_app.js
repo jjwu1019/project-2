@@ -32,15 +32,12 @@ function buildlist(){
 
 //Function that build table base on user selection in the dropdown menu.
 function buildTable(b){
-    
         d3.csv("/static/Data/merged.csv").then(function(x) {
-        
         //filter our data base on the region user selected.
         function filter_region(x) {
             return x.region === b;
           }
         var selected_region = x.filter(filter_region);
-        
         //Grab information from filtered data.
         var dish = selected_region.map(y => y.title)
         var weightWatcherSmartPoints =  selected_region.map(y => y.weightWatcherSmartPoints)
@@ -48,13 +45,11 @@ function buildTable(b){
         var healthScore =  selected_region.map(y => y.healthScore)
         var aggregateLikes =  selected_region.map(y => y.aggregateLikes)
         var calories =  selected_region.map(y => y.calories)
-
-        //d3.select table body to append information in the future.
+        //d3.select tbody tag to append information in the future.
         var tbody = d3.select("#datatable").select("tbody");
         //empty tbody
         tbody.html("");
-       
-        //Append filtered information into tbody.
+        //Loop through arrays and populate the empty table body.
       for (var i = 0; i < selected_region.length; i++) {
             var trow = tbody.append("tr");
             trow.append("th").text(dish[i]);
@@ -63,20 +58,12 @@ function buildTable(b){
             trow.append("td").text(parseInt(healthScore[i]));
             trow.append("td").text(parseInt(aggregateLikes[i]));
             trow.append("td").text(parseInt(calories[i]));
-            
         }
-        
         //Call barchart building function written below.
         buildHighChart()
     }).catch(function(error) {
         console.log(error);
       });
-
-    
-      
-    
-    
-    
     }
 
     //Build table when initializing the page.
