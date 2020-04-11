@@ -1,1 +1,1 @@
-web:gunicorn foodtopia.app:app
+web: gunicorn foodtopia.app:app
