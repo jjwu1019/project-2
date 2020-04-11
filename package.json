@@ -1,3 +1,6 @@
+"scripts": {
+   "start": "node index.js"
+}
 {
     "title": "Agency",
     "name": "startbootstrap-agency",
